@@ -13,3 +13,29 @@
  *= require_tree .
  *= require_self
  */
+
+.art{
+    text-align:center;
+    color:#00f
+}
+
+div.calc,div.calcfr,div.calcfr1{
+    background:#ddd;
+    border-radius:10px;
+    box-shadow:0 5px 5px #909090,0px 0 5px #f2f2f2;
+    padding:1.5em 4% 1.7em;
+    margin:auto
+}
+div.calcfr{
+    width:60%
+}
+div.calcfr1{
+    width:250px
+}
+
+.oms_formula,.oms_vector{
+    font-family:MJI;
+    font-size:1.2em;
+    display:inline
+}
+
