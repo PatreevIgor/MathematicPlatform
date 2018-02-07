@@ -1,12 +1,33 @@
 class SolveController < ApplicationController
   def button_solve_linear_equation
-    params_with_type = { type: 'linear' }
-    params_with_type[:a] = params['a'].to_f
-    params_with_type[:b] = params['b'].to_f
-    result = request_sender.send_request(params_with_type)
+    @linear_result = request_sender.send_request(linear_equation_params(params))
+
+    redirect_to root_path(linear_result: @linear_result)
   end
 
   def button_solve_quadratic_equation
+    @quadratic_result = request_sender.send_request(quadratic_equation_params(params))
+
+    redirect_to root_path(quadratic_result: @quadratic_result)
+  end
+
+  private
+
+  def linear_equation_params(params)
+    full_params     = { type: 'linear' }
+    full_params[:a] = params['a'].to_f
+    full_params[:b] = params['b'].to_f
+
+    full_params
+  end
+
+  def quadratic_equation_params(params)
+    full_params     = { type: 'quadratic' }
+    full_params[:a] = params['a'].to_f
+    full_params[:b] = params['b'].to_f
+    full_params[:c] = params['c'].to_f
+
+    full_params
   end
 
   def request_sender
