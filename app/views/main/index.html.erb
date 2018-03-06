@@ -1,7 +1,7 @@
 <section class='lib' id='oms_blok1'>
   <h2 class='art'>Calculator linear equations</h2>
   <div class='calcfr' id='frtabl' style='text-align:center;'>
-    <%= form_tag(button_solve_linear_equation_solve_index_path, method: 'post') do %>
+    <%= form_tag(solve_linear_equation_solve_index_path, method: 'post', remote: true) do %>
       <%= text_field_tag(:a) %>
       <span class='oms_formula'>x</span>&nbsp;+&nbsp;
       <%= text_field_tag(:b) %>&nbsp;=&nbsp;0
@@ -18,7 +18,7 @@
 <section class='lib' id='oms_blok1'>
   <h2 class='art'>Calculator quadratic equations</h2>
   <div class='calcfr' id='frtabl' style='text-align:center;'>
-    <%= form_tag(button_solve_quadratic_equation_solve_index_path, method: 'post') do %>
+    <%= form_tag(solve_quadratic_equation_solve_index_path, method: 'post', remote: true) do %>
       <%= text_field_tag(:a) %>
       <span class='oms_formula'>x</span><sup>2</sup>&nbsp;+&nbsp;
       <%= text_field_tag(:b) %>
@@ -26,7 +26,7 @@
       <%= text_field_tag(:c) %>&nbsp;=&nbsp;0
       <p><%= submit_tag('Solve the quadratic equation') %></p>
     <% end %>
-    <div class='linear_result'>
+    <div class='quadratic_result'>
       <span class='oms_formula'>x</span>&nbsp;=&nbsp; <%= @quadratic_result %>
     </div>
   </div>

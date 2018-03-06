@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   resources :solve do
     collection do
-      post :button_solve_linear_equation
-      post :button_solve_quadratic_equation
+      post :solve_linear_equation
+      post :solve_quadratic_equation
     end
   end
 end

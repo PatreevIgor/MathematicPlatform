@@ -1,14 +1,18 @@
 class SolveController < ApplicationController
-  def button_solve_linear_equation
+  def solve_linear_equation
     @linear_result = request_sender.send_request(linear_equation_params(params))
 
-    redirect_to root_path(linear_result: @linear_result)
+    respond_to do |format|
+      format.js { @linear_result }
+    end
   end
 
-  def button_solve_quadratic_equation
+  def solve_quadratic_equation
     @quadratic_result = request_sender.send_request(quadratic_equation_params(params))
 
-    redirect_to root_path(quadratic_result: @quadratic_result)
+    respond_to do |format|
+      format.js { @quadratic_result }
+    end
   end
 
   private
