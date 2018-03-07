@@ -1,33 +1,27 @@
 <section class='lib' id='oms_blok1'>
   <h2 class='art'>Calculator linear equations</h2>
   <div class='calcfr' id='frtabl' style='text-align:center;'>
-    <%= form_tag(solve_linear_equation_solve_index_path, method: 'post', remote: true) do %>
-      <%= text_field_tag(:a) %>
+    <%= form_tag(solve_equation_solve_index_path, method: 'post', remote: true) do %>
+      <%= text_field_tag(:a, nil, size: 1) %>
       <span class='oms_formula'>x</span>&nbsp;+&nbsp;
-      <%= text_field_tag(:b) %>&nbsp;=&nbsp;0
+      <%= text_field_tag(:b, nil, size: 1) %>&nbsp;=&nbsp;0
       <p><%= submit_tag('Solve the linear equation') %></p>
     <% end %>
-    <div class='linear_result'>
-      <span class='oms_formula'>x</span>&nbsp;=&nbsp; <%= @linear_result %>
-    </div>
+    <div class='linear_result'></div>
   </div>
 </section>
-
 <br>
-
 <section class='lib' id='oms_blok1'>
   <h2 class='art'>Calculator quadratic equations</h2>
   <div class='calcfr' id='frtabl' style='text-align:center;'>
-    <%= form_tag(solve_quadratic_equation_solve_index_path, method: 'post', remote: true) do %>
-      <%= text_field_tag(:a) %>
+    <%= form_tag(solve_equation_solve_index_path, method: 'post', remote: true) do %>
+      <%= text_field_tag(:a, nil, size: 1) %>
       <span class='oms_formula'>x</span><sup>2</sup>&nbsp;+&nbsp;
-      <%= text_field_tag(:b) %>
+      <%= text_field_tag(:b, nil, size: 1) %>
       <span class='oms_formula'>x</span>&nbsp;+&nbsp;
-      <%= text_field_tag(:c) %>&nbsp;=&nbsp;0
+      <%= text_field_tag(:c, nil, size: 1) %>&nbsp;=&nbsp;0
       <p><%= submit_tag('Solve the quadratic equation') %></p>
     <% end %>
-    <div class='quadratic_result'>
-      <span class='oms_formula'>x</span>&nbsp;=&nbsp; <%= @quadratic_result %>
-    </div>
+    <div class='quadratic_result'></div>
   </div>
 </section>
