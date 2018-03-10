@@ -1,52 +1,29 @@
 class SolveController < ApplicationController
   def solve_equation
-    quadratic_equation?(params) ? respond_quadratic_result : respond_linear_result
+    quadratic_equation?(params) ? respond_quadratic_result(params) : respond_linear_result
   end
 
   private
 
-  def quadratic_equation?(params)
-    params[:c].present?
-  end
+  def respond_quadratic_result(params)
+    @quadratic_result = result_calculator.quadratic_result(params)
 
-  def respond_quadratic_result
-    @quadratic_result = quadratic_result
-
-    if quadratic_result.is_a?(Array)
+    if result_calculator.quadratic_result(params).is_a?(Array)
       respond_two_roots
-    elsif !convert_to_i(quadratic_result).nil?
+    elsif !result_calculator.convert_to_i(result_calculator.quadratic_result(params)).nil?
       respond_one_root
     else
       respond_invalid_quadratic_result
     end
   end
 
-  def respond_two_roots
+  def respond_two_roots 
     @x1 = @quadratic_result.first
     @x2 = @quadratic_result.last
 
     respond_to do |format|
       format.js { render action: 'valid_quadratic_result_two_roots.js.erb' }
     end
-  end
-
-  def convert_to_i(str)
-    Integer(str)
-  rescue ArgumentError
-    nil
-  end
-
-  def quadratic_result
-    request_sender.send_request(quadratic_equation_params(params))['result']
-  end
-
-  def quadratic_equation_params(params)
-    full_params     = { type: 'quadratic' }
-    full_params[:a] = params['a'].to_f
-    full_params[:b] = params['b'].to_f
-    full_params[:c] = params['c'].to_f
-
-    full_params
   end
 
   def respond_one_root
@@ -62,25 +39,17 @@ class SolveController < ApplicationController
   end
 
   def respond_linear_result
-    @linear_result = linear_result
+    @linear_result = result_calculator.linear_result(params)
     respond_to do |format|
       format.js { render action: 'linear_result.js.erb' }
     end
   end
 
-  def linear_result
-    request_sender.send_request(linear_equation_params(params))['result']
+  def quadratic_equation?(params)
+    params[:c].present?
   end
 
-  def linear_equation_params(params)
-    full_params     = { type: 'linear' }
-    full_params[:a] = params['a'].to_f
-    full_params[:b] = params['b'].to_f
-
-    full_params
-  end
-
-  def request_sender
-    @request_sender ||= RequestSender.new
+  def result_calculator
+    @result_calculator ||= ResultCalculator.new
   end
 end
