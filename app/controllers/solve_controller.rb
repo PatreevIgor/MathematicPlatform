@@ -1,55 +1,34 @@
 class SolveController < ApplicationController
   def solve_equation
-    quadratic_equation?(params) ? respond_quadratic_result(params) : respond_linear_result
+    @html_block = html_block(params)
+    @result_in_html = html_generator_presenter.present(prepare_result(params))
+
+    respond_to :js
   end
 
   private
 
-  def respond_quadratic_result(params)
-    @quadratic_result = result_calculator.quadratic_result(params)
-
-    if result_calculator.quadratic_result(params).is_a?(Array)
-      respond_two_roots
-    elsif !result_calculator.convert_to_i(result_calculator.quadratic_result(params)).nil?
-      respond_one_root
-    else
-      respond_invalid_quadratic_result
-    end
+  def html_block(params)
+    quadratic_equation_type?(params) ? '.quadratic_result' : '.linear_result'
   end
 
-  def respond_two_roots 
-    @x1 = @quadratic_result.first
-    @x2 = @quadratic_result.last
-
-    respond_to do |format|
-      format.js { render action: 'valid_quadratic_result_two_roots.js.erb' }
-    end
-  end
-
-  def respond_one_root
-    respond_to do |format|
-      format.js { render action: 'valid_quadratic_result_one_root.js.erb' }
-    end
-  end
-
-  def respond_invalid_quadratic_result
-    respond_to do |format|
-      format.js { render action: 'invalid_quadratic_result.js.erb' }
-    end
-  end
-
-  def respond_linear_result
-    @linear_result = result_calculator.linear_result(params)
-    respond_to do |format|
-      format.js { render action: 'linear_result.js.erb' }
-    end
-  end
-
-  def quadratic_equation?(params)
+  def quadratic_equation_type?(params)
     params[:c].present?
   end
 
-  def result_calculator
-    @result_calculator ||= ResultCalculator.new
+  def html_generator_presenter
+    @html_generator_presenter ||= HtmlGeneratorPresenter.new
+  end
+
+  def prepare_result(params)
+    if quadratic_equation_type?(params)
+      equation_solver.solve_quadratic_equation(params)
+    else
+      equation_solver.solve_linear_equation(params)
+    end
+  end
+
+  def equation_solver
+    @equation_solver ||= EquationSolver.new
   end
 end

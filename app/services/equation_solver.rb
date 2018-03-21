@@ -1,16 +1,10 @@
-class ResultCalculator
-  def quadratic_result(params)
+class EquationSolver
+  def solve_quadratic_equation(params)
     request_sender.send_request(quadratic_equation_params(params))['result']
   end
 
-  def linear_result(params)
+  def solve_linear_equation(params)
     request_sender.send_request(linear_equation_params(params))['result']
-  end
-
-  def convert_to_i(str)
-    Integer(str)
-  rescue ArgumentError
-    nil
   end
 
   private
