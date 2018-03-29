@@ -1,5 +1,6 @@
 class EquationSolver
   def solve_equation(params)
+    # binding.pry
     quadratic_equation_type?(params) ? solve_quadratic_equation(params) : solve_linear_equation(params)
   end
 
